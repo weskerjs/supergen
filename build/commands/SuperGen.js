@@ -48,7 +48,6 @@ class Supergen extends standalone_1.BaseCommand {
             fields,
         });
         await this.writeToFile(`app/Models/${resourceTitleCase}.ts`, modelContent);
-        console.log("Model generated");
         // Generate the controller
         const controllerContent = ejs_1.default.render(controllerTemplate, {
             resourceController: controllerName,
@@ -58,7 +57,6 @@ class Supergen extends standalone_1.BaseCommand {
             fields,
         });
         await this.writeToFile(`app/Controllers/Http/${controllerName}.ts`, controllerContent);
-        console.log("Controller generated");
         // Generate the migration
         const migrationContent = ejs_1.default.render(migrationTemplate, {
             resourcePlural,
@@ -66,7 +64,6 @@ class Supergen extends standalone_1.BaseCommand {
         });
         const currentTime = new Date().getTime();
         await this.writeToFile(`database/migrations/${currentTime}_${resourcePlural}.ts`, migrationContent);
-        console.log("Migration generated");
         // Generate the views
         const views = ["create", "edit", "list", "show"];
         for (const view of views) {
@@ -79,7 +76,6 @@ class Supergen extends standalone_1.BaseCommand {
             (0, fs_extra_1.ensureDirSync)(`resources/views/${resourcePlural}`);
             await this.writeToFile(`resources/views/${resourcePlural}/${view}.edge`, viewContent);
         }
-        console.log("Views generated");
         // Append the routes to the routes file
         const routesFile = await (0, fs_extra_1.readFile)("start/routes.ts", "utf-8");
         const routes = `

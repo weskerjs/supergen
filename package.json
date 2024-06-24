@@ -2,7 +2,7 @@
   "name": "@weskerjs/supergen",
   "version": "0.0.9",
   "description": "Super generator for AdonisJS",
-  "private": false,
+  "registry": "https://registry.npmjs.org",
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
@@ -61,5 +61,9 @@
   "bugs": {
     "url": "https://github.com/weskerjs/supergen/issues"
   },
-  "homepage": "https://github.com/weskerjs/supergen#readme"
+  "homepage": "https://github.com/weskerjs/supergen#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
 }
