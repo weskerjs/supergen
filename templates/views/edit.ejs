@@ -1,0 +1,23 @@
+
+<a href="/<%= resourcePlural %>/{{ <%= resource %>.id }}">Back</a>
+
+<form action="/<%= resourcePlural %>/{{ <%= resource %>.id }}" method="post">
+  {{ csrfField() }}
+
+  <% for( let i = 0; i < fields.length; i++ ) { %>
+
+  <div class="form-group">
+    <label for="<%= fields[i].name %>"><%= fields[i].name %></label>
+    <input
+      type="<%= fields[i].type %>"
+      id="<%= fields[i].name %>"
+      name="<%= fields[i].name %>"
+      value="{{ <%= resource %>.<%= fields[i].name %> }}"
+      placeholder="<%= fields[i].label %>"
+    />
+  </div>
+
+  <% } %>
+
+  <button type="submit">Update</button>
+</form>

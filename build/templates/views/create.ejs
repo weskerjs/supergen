@@ -1,0 +1,17 @@
+<a href="/<%= resourcePlural %>">Back</a>
+
+<form action="/<%= resourcePlural %>" method="post">
+
+  {{ csrfField() }}
+
+  <% for( let i = 0; i < fields.length; i++ ) { %>
+
+  <div class="form-group" style="margin-top: 8px;">
+    <label for="<%= fields[i].name %>"><%= fields[i].name %></label>
+    <input type="<%= fields[i].type %>" id="<%= fields[i].name %>" name="<%= fields[i].name %>" placeholder="<%= fields[i].name %>" />
+  </div>
+
+  <% } %>
+
+  <button type="submit" style="margin-top: 8px;">Create</button>
+</form>

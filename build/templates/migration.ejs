@@ -1,0 +1,23 @@
+import BaseSchema from "@ioc:Adonis/Lucid/Schema";
+
+export default class extends BaseSchema {
+  protected tableName = "<%= resourcePlural %>";
+
+  public async up() {
+    this.schema.createTable(this.tableName, (table) => {
+
+        table.increments("id").primary();
+
+        <% for( let index = 0; index < fields.length; index++ ) { %>
+        table.<%= fields[index].type  %>("<%= fields[index].name %>")%>;
+        <% } %>
+
+        table.timestamp("created_at", { useTz: true });
+        table.timestamp("updated_at", { useTz: true });
+    });
+  }
+
+  public async down() {
+    this.schema.dropTable(this.tableName);
+  }
+}

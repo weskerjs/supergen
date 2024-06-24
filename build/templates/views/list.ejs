@@ -1,0 +1,16 @@
+<div>
+
+  <h1><%= resourcePlural %></h1>
+
+  <a href="/<%= resourcePlural %>/create">Create</a>
+
+  <ul>
+    @each(<%= resource %> in <%= resourcePlural %>)
+    <li>
+      <a href="/<%= resourcePlural %>/{{ <%= resource %>.id }}">
+        {{ <%= resource %>.id }}
+      </a>
+    </li>
+    @end
+  </ul>
+</div>

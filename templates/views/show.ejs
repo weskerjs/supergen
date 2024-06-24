@@ -1,0 +1,13 @@
+<a href="/<%= resourcePlural %>">Back</a>
+
+<div>
+  <h1>{{ <%= resource %>.id }}</h1>
+
+  <ul>
+    <% for( let i = 0; i < fields.length; i++ ) { %>
+    <li><strong><%= fields[i].name %></strong>: {{ <%= resource %>.<%= fields[i].name %> }}</li>
+    <% } %>
+  </ul>
+
+  <a href="/<%= resourcePlural %>/{{ <%= resource %>.id }}/edit">Edit</a>
+</div>

@@ -1,0 +1,90 @@
+import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+
+import <%= model %> from "App/Models/<%= model %>";
+
+export default class <%= resourceController %> {
+    public async list({ view }: HttpContextContract) {
+
+        const <%= resourcePlural %> = await <%= model %>.all();
+
+        return view.render("<%= resourcePlural %>/list", {
+            <%= resourcePlural %>
+        });
+    }
+
+    public async show({ request, view }: HttpContextContract) {
+        const { id } = request.params();
+
+        const <%= resource %> = await <%= model %>.query().where("id", id).first();
+
+        return view.render("<%= resourcePlural %>/show", {
+            <%= resource %>
+        });
+    }
+
+    public async create({ view }: HttpContextContract) {
+        return view.render("<%= resourcePlural %>/create");
+    }
+
+    public async store({ request, response }: HttpContextContract) {
+        const {
+            <% for( let index = 0; index < fields.length; index++ ) { %>
+            <%= fields[index].name %>,
+            <% } %>
+        } = request.body();
+
+        const <%= resource %> = await <%= model %>.create({
+            <% for( let index = 0; index < fields.length; index++ ) { %>
+                <%= fields[index].name %>,
+                <% } %>
+        });
+
+        return response.redirect("<%= resourcePlural %>/" + <%= resource %>.id);
+    }
+
+    public async edit({ request, view, response }: HttpContextContract) {
+
+        const { id } = request.params();
+
+        const <%= resource %> = await <%= model %>.find(id);
+
+        if (!<%= resource %>) {
+            return response.status(404).json({ message: "<%= resource %> not found" });
+        }
+
+        return view.render(`<%= resourcePlural %>/edit`, {
+            <%= resource %>
+        });
+    }
+
+    public async update({ request, response }: HttpContextContract) {
+
+        const { id } = request.params();
+
+        const {
+            <% for( let index = 0; index < fields.length; index++ ) { %>
+                <%= fields[index].name %>,
+                <% } %>
+        } = request.body();
+
+        const <%= resource %> = await <%= model %>.find(id);
+
+        if (!<%= resource %>) {
+            return response.status(404).json({ message: "<%= resource %> not found" });
+        }
+
+        <%= resource %>.merge({
+            <% for( let index = 0; index < fields.length; index++ ) { %>
+                <%= fields[index].name %>,
+                <% } %>
+        });
+
+        await <%= resource %>.save();
+
+        return response.redirect("/<%= resourcePlural %>/" + <%= resource %>.id);
+    }
+
+    public async destroy({ response }: HttpContextContract) {
+        return response.redirect("<%= resourcePlural %>");
+    }
+}
